@@ -1,0 +1,9 @@
+.switch-off-table li{
+    list-style: none;
+    display: inline;
+}
+
+.switch-off-table ul{
+    list-style: none;
+    display: inline;
+}

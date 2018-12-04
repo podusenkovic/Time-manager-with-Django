@@ -1,0 +1,33 @@
+{% load static %}
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{% static 'time_manager\css\bootstrap.css' %}" crossorigin="anonymous">
+  </head>
+    <body class="text-center" style="">
+      <form class="form-signin" action = "{% url 'time_manager:signin' %}" method = "post">
+        {% csrf_token %}
+        <h1 class="h3 mb-3 p-5 font-weight-normal">Please sign in</h1>
+        <div class = "w-25 mx-auto">
+          <label class="sr-only">Username</label>
+          <input type="text" name = "username" class="form-control" placeholder="Username" required="" autofocus="">
+          <label class="sr-only">Password</label>
+          <input type="password" name = "password" class="form-control" placeholder="Password" required="">
+        </div>
+        <!--<div class="checkbox mb-3">
+          <label>
+            <input type="checkbox" value="remember-me"> Remember me
+          </label>
+        </div>-->
+        <div class = "w-25 mx-auto">
+          <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        </div> <BR>
+        <a href = "{% url 'time_manager:signup' %}"  class="btn btn-primary btn-lg active" role="button" aria-pressed="true">HAVEN'T REGESTERED YET?</a>
+      </form>
+  </body>
+</html>
