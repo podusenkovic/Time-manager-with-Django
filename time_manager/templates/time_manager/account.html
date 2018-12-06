@@ -1,1 +1,9 @@
-<h1> IF YOU CAME HERE AFTER SIGNIN THEN ITS WORKING </h1>
+
+<h1> There is list of your tasks, dear {{ user.username }} </h1>
+<ul>
+{% for task in user.task_set.all %}
+  <li> "{{ task.task_text }}" starts {{ task.task_start_date }}
+    <a href = "{% url 'time_manager:task_change' user.username task.id %}"> change/del </a> </li>
+{% endfor %}
+</ul>
+<a href = "{% url 'time_manager:logout' %}"> LOGOUT </a>

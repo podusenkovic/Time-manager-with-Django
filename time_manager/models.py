@@ -7,20 +7,12 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.core.exceptions import ValidationError
 
-# Create your models here.
-
-class Person(models.Model):
-    user = models.OneToOneField(User, null = True, blank = True, on_delete = models.CASCADE)
-
-    def __str__(self):
-        return self.user.username
 
 class Task(models.Model):
-    user = models.ForeignKey(Person, null = True, blank = True, on_delete = models.CASCADE)
+    user = models.ForeignKey(User, null = True, blank = True, on_delete = models.CASCADE)
     task_text = models.CharField(max_length = 200)
     task_start_date = models.DateTimeField('date start')
-    task_duration = models.DateTimeField('task duration')
-    def ___str___(self):
+    def __str__(self):
         return self.task_text
 
     def start_soon(self):
