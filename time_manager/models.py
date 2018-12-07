@@ -12,6 +12,10 @@ class Task(models.Model):
     user = models.ForeignKey(User, null = True, blank = True, on_delete = models.CASCADE)
     task_text = models.CharField(max_length = 200)
     task_start_date = models.DateTimeField('date start')
+    def create_task(self, task_text, task_start_date):
+        book = self.create(task_text = task_text, task_start_date = task_start_date)
+        return book
+
     def __str__(self):
         return self.task_text
 
@@ -65,3 +69,25 @@ class CustomUserCreationForm(forms.Form):
             self.cleaned_data['password1']
         )
         return user;
+
+class TaskCreationForm(forms.Form):
+    task_text = forms.CharField(label = 'Enter text of the task', min_length = 4, max_length = 150,
+                                widget = forms.TextInput(attrs={'placeholder': 'Task text',
+                                                                'class' : 'form-control'}))
+    task_date = forms.DateTimeField(widget = forms.TextInput(attrs={'placeholder': 'YYYY-MM-DD HH:MM'}))
+
+    def clean_task_text(self):
+        task_text = self.cleaned_data['task_text'].lower()
+        return task_text
+
+    def clean_task_date(self):
+        task_date = self.cleaned_data['task_date']
+        return task_date
+
+    def save(self, username, commit = True):
+        task = Task(
+            user = User.objects.get(username = username),
+            task_text = self.cleaned_data['task_text'],
+            task_start_date = self.cleaned_data['task_date']
+        )
+        task.save()

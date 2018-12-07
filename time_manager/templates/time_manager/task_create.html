@@ -10,17 +10,25 @@
     <link rel="stylesheet" href="{% static 'time_manager\css\bootstrap.css' %}" crossorigin="anonymous">
   </head>
 <body class="text-center" style="">
-  <form action = "{% url 'time_manager:task_change' user.username task.id %}" method = "post">
+  <form action = "{% url 'time_manager:task_create' user.username %}" method = "post">
     {% csrf_token %}
     <h1 class="h3 mb-3 p-5 font-weight-normal">Please fill all lines</h1>
     <div class = "w-25 mx-auto">
-      <input maxlength="150" minlength="4" required = "" type = "text" value = "{{ task.task_text }}" name = "newTaskText">
+      {{ form.task_text }}
+      {% if form.errors.task_text %}
+        <footer class="blockquote-footer">
+            {{form.errors.task_text.as_text}}
+        </footer>
       <br>
-      <input type = "datetime" value = "{{ task.task_start_date|date:'Y-m-d H:i'}}" name = "newTaskDate">
-      <br> Delete :
-      <input type = "checkbox" name = "deleteTask">
+      {% endif %}
+      {{ form.task_date }}
+      {% if form.errors.task_date %}
+        <footer class="blockquote-footer">
+            {{form.errors.task_date.as_text}}
+        </footer>
+      {% endif %}
     <div class = "w-25 mx-auto">
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Change</button>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
     </div> <BR>
   </form>
 </body>

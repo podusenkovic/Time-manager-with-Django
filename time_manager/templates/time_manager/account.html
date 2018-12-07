@@ -1,9 +1,18 @@
 
 <h1> There is list of your tasks, dear {{ user.username }} </h1>
-<ul>
-{% for task in user.task_set.all %}
-  <li> "{{ task.task_text }}" starts {{ task.task_start_date }}
-    <a href = "{% url 'time_manager:task_change' user.username task.id %}"> change/del </a> </li>
-{% endfor %}
-</ul>
+{% if not user.task_set.count == 0 %}
+  <ul>
+  {% for task in user.task_set.all %}
+    <li> "{{ task.task_text }}" starts {{ task.task_start_date }}
+      <a href = "{% url 'time_manager:task_change' user.username task.id %}"> change/del </a> </li>
+  {% endfor %}
+  </ul>
+  <a href = "{% url 'time_manager:task_create' user.username %}">Create new task</a>
+  <BR>
+{% else %}
+  There aren't any tasks!
+  <BR>
+  Whould you like to create one? <a href = "{% url 'time_manager:task_create' user.username %}"> YES!</a>
+  <BR>
+{% endif %}
 <a href = "{% url 'time_manager:logout' %}"> LOGOUT </a>
