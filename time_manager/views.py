@@ -6,12 +6,34 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.utils.dateparse import parse_datetime
+from django.core.mail import send_mail
+from django.conf import settings
+
+import sched, time
 
 from datetime import datetime
 from .models import Task
 
 from django.contrib.auth import authenticate
 # Create your views here.
+
+"""
+sheduler = sched.scheduler(time.time, time.sleep)
+
+def emailSender(sc):
+    for task in Task.objects.all():
+        if task.start_soon():
+            send_mail(
+                'There is notification from time manager',
+                'Your task: ' + task.task_text + ' will start in one day!',
+                settings.EMAIL_HOST_USER,
+                Task.user.email
+            )
+            sheduler.enter(600, 1, emailSender, (sc,))
+
+sheduler.enter(600, 1, emailSender, (sheduler,))
+sheduler.run()
+"""
 
 def IndexView(request):
     template_name = 'time_manager/index.html'
